@@ -3,7 +3,7 @@
   "name": "C to F App",
   "short_name": "Temp Converter",
   "description": "A basic temperature converter application that converts Celsius to Fahrenheit.",
-  "start_url": "./",
+  "start_url": "/index.html",
   "orientation": "any",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -12,7 +12,7 @@
     {
       "src": "/sheriff.jpg",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/jpg"
     }
   ]
 }
