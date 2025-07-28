@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Degree C to F</title>
+    <script src="index.js" defer></script>
+    <link rel="manifest" href="/manifest.json">
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/index.js", { scope: "/index.html" });
+      }
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      input[type="number"],
+      input[readonly] {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        border: 1px solid #007bff;
+        background: none;
+        color: #007bff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background-color: #007bff;
+        color: white;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fafafa;
+      }
+
+      li {
+        padding: 0.75rem;
+        border-bottom: 1px solid #ddd;
+      }
+
+      li:last-child {
+        border-bottom: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Degree C to F</h1>
+      <form id="contactForm" name="contactForm">
+        <div class="form-group">
+          <input
+            type="number"
+            name="inputText"
+            id="inputText"
+            placeholder="Celsius temperature here"
+          />
+        </div>
+        <div class="form-group">
+          <button type="submit" id="convert">Convert</button>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="outputText"
+            id="outputText"
+            readonly
+            placeholder="Fahrenheit"
+          />
+        </div>
+        <div class="form-group">
+          <h3>History</h3>
+          <ul id="history">
+            <li>empty</li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+    window.addEventListener("load", function (event) {
+      document.getElementById("convert").addEventListener("click", convertText);
+      loadHistory();
+    });
+
+    function convertText(e) {
+      e.preventDefault();
+      if (document.getElementById("inputText").value) {
+        var inputTextValue = parseInt(
+          document.getElementById("inputText").value
+        );
+        if (typeof inputTextValue === "number") {
+          var convertedText = inputTextValue * (9 / 5) + 32;
+          document.getElementById("outputText").value = convertedText;
+          storeConversionInHistory(inputTextValue, convertedText);
+          loadHistory();
+        }
+      }
+    }
+
+    function loadHistory() {
+      let existingObject = window.localStorage.getItem("conversionHistory");
+      if (existingObject) {
+        existingObject = JSON.parse(existingObject);
+        historyElements = "";
+        existingObject.forEach((element) => {
+          historyElements += `<li class="list-group-item">${element.c} °C = ${element.f} °F</li>`;
+        });
+        document.getElementById("history").innerHTML = historyElements;
+      }
+    }
+
+    function storeConversionInHistory(inputTextValue, convertedText) {
+      let existingObject = window.localStorage.getItem("conversionHistory");
+      if (existingObject) existingObject = JSON.parse(existingObject);
+      else existingObject = [];
+
+      existingObject.unshift({ c: inputTextValue, f: convertedText });
+      existingObject = existingObject.slice(0, 3);
+      window.localStorage.setItem(
+        "conversionHistory",
+        JSON.stringify(existingObject)
+      );
+    }
+  </script>
+</html>

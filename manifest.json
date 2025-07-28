@@ -1,0 +1,18 @@
+{
+  "lang": "en-us",
+  "name": "C to F App",
+  "short_name": "Temp Converter",
+  "description": "A basic temperature converter application that converts Celsius to Fahrenheit.",
+  "start_url": "./",
+  "orientation": "any",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d6efd",
+  "icons": [
+    {
+      "src": "/sheriff.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
